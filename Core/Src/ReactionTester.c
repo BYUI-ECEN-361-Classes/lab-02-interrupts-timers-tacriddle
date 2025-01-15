@@ -68,9 +68,19 @@ void got_start()
 
 	  /**************** STUDENT TO FILL IN START HERE ********************/
 		// Step 1
+		MultiFunctionShield_Clear();
+		Display_Waiting();
 		// Step 2
+		HAL_Delay(rand_millisec);
 		// Step 3
+
+		HAL_GPIO_TogglePin(LED_D1_GPIO_Port, LED_D1_Pin);
+		HAL_GPIO_TogglePin(LED_D2_GPIO_Port, LED_D2_Pin);
+		HAL_GPIO_TogglePin(LED_D3_GPIO_Port, LED_D3_Pin);
+		HAL_GPIO_TogglePin(LED_D4_GPIO_Port, LED_D4_Pin);
+		Display_All();
 		// Step 4
+		HAL_TIM_Base_Start_IT(&htim3);
 	  /**************** STUDENT TO FILL IN END  HERE ********************/
 	}
 void got_stop()
@@ -86,13 +96,12 @@ void got_stop()
 
 	  /**************** STUDENT TO FILL IN START HERE ********************/
       // 1.) Stop the random timer // Random timer is timer3
-
+		HAL_TIM_Base_Stop_IT(&htim3);
       // 2.) Read the value of the timer -- this step provided
 		last_reaction_time_in_millisec = __HAL_TIM_GetCounter(&htim3) / 10; // Why is it divide by 10?
 
 	  // 3.) Display the value
-
-
+		MultiFunctionShield_Display (last_reaction_time_in_millisec);
       /**************** STUDENT TO FILL IN END HERE ********************/
 		// Keep the best time in a global variable
 		if (last_reaction_time_in_millisec < best_reaction_time_in_millisec) best_reaction_time_in_millisec = last_reaction_time_in_millisec;
